@@ -12,7 +12,7 @@ class Agent:
     def __init__(self, system_name) -> None:
 
         os.environ['OPENAI_API_KEY']="<>"
-        llm = ChatOpenAI(model="gpt-4o", temperature=0.1)
+        llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
         prompt_str = worldview_prompt.format(system_name=system_name) + system_prompts[system_name]
         print(prompt_str)

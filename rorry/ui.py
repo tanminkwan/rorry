@@ -35,7 +35,7 @@ with chat_placeholder:
             st.write(f"AI: {st.session_state['generated'][i]}")
 
 # 사용자 입력 받기 (화면 아래에 고정)
-user_input = st.text_input(label = "You: ", key = "input")
+user_input = st.text_input(label = "You: ", key = "input", value="")
 
 if st.button("Send"):
     if user_input:
