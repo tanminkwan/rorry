@@ -96,6 +96,24 @@ legacy_fucntions['코어뱅킹'] = \
 legacy_fucntions['인터넷뱅킹'] = \
     [
         {
+            "name": "create_account",
+            "description": "주민번호와 예금주 이름으로 새로운 은행 계좌 또는 은행 계정을 개설(생성)한다.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "user_name": {
+                        "type": "string",
+                        "description": "예금주, 계좌 주인",
+                    },
+                    "id_no": {
+                        "type": "string",
+                        "description": "주민번호",
+                    },
+                },
+                "required": ["id_no","user_name"],
+            },
+        },
+        {
             "name": "deposit",
             "description": "산업은행 특정 계좌에 금액을 입금합니다",
             "parameters": {
@@ -157,7 +175,7 @@ legacy_fucntions['인터넷뱅킹'] = \
                         "type": "integer",
                         "description": "이체할 금액, 값은 항상 0보다 큼",
                     },
-                    "bank_name": {
+                    "to_bank": {
                         "type": "string",
                         "description": "은행명, 은행이름, 타은행, 산업은행이 아닌 은행",
                     },
@@ -166,7 +184,7 @@ legacy_fucntions['인터넷뱅킹'] = \
                         "description": "이체 받을 은행계좌, 이체 받을 계좌번호",
                     },
                 },
-                "required": ["account","amount", "bank_name", "to_account"],
+                "required": ["account","amount", "to_bank", "to_account"],
             },
         },
         {
@@ -180,7 +198,7 @@ legacy_fucntions['인터넷뱅킹'] = \
                         "description": "은행계좌, 계좌번호",
                     },
                 },
-                "required": ["account"],
+                "required": ["account","amount"],
             },
         },
     ]

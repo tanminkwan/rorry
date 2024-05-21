@@ -7,11 +7,12 @@ import os
 import re
 from system_prompt import worldview_prompt, system_prompts
 from legacy_engine import LegacyEngine
+from config import OPENAI_API_KEY
 
 class Agent:
     def __init__(self, system_name) -> None:
 
-        os.environ['OPENAI_API_KEY']=""
+        os.environ['OPENAI_API_KEY'] = OPENAI_API_KEY
         llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
         prompt_str = worldview_prompt.format(system_name=system_name) + system_prompts[system_name]

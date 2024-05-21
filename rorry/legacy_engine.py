@@ -7,7 +7,8 @@ import legacy
 class LegacyEngine:
     def __init__(self, system_name) -> None:
         self.functions = legacy_fucntions[system_name]
-        self.legacy = self.__get_legacy(system_name) 
+        self.legacy = self.__get_legacy(system_name)
+        print('Legacy Name :', self.legacy.get_legacy_name())
 
     def command(self, command):
         return self.__rorry_bot(command)
@@ -43,8 +44,8 @@ class LegacyEngine:
             # 가끔 function 이름 앞에 'functions/' 문자열이 붙는 경우 remove
             function_name = result.function_call.name.replace('functions/','')
             arguments = json.loads(result.function_call.arguments)
-            #response = getattr(self.legacy, function_name)(**arguments)
-            response = f"Legacy 함수 호출 : {function_name}, {arguments}"
+            response = getattr(self.legacy, function_name)(**arguments)
+            #response = f"Legacy 함수 호출 : {function_name}, {arguments}"
             print(f"Legacy 함수 호출 : {function_name}, {arguments}")
             rtn = 1
         else:
