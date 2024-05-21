@@ -1,5 +1,10 @@
+legacy_map = {}
+
 class Legacy:
-    pass
+
+    @classmethod
+    def get_legacy_name(cls):
+        return next((key for key, value in legacy_map.items() if value == cls), "No Value")
 
 class AssetManager(Legacy):
 
@@ -42,7 +47,15 @@ class AssetManager(Legacy):
 class CoreBanking(Legacy):
     pass
 
+class Channel(Legacy):
+    pass
+
+class InternetBanking(Legacy):
+    pass
+
 legacy_map = {
     '자산관리': AssetManager ,
     '코어뱅킹': CoreBanking ,
+    '채널관리': Channel ,
+    '인터넷뱅킹': InternetBanking ,
 }
