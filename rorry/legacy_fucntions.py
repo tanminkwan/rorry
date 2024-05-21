@@ -92,3 +92,95 @@ legacy_fucntions['코어뱅킹'] = \
             },
         },
     ]
+
+legacy_fucntions['인터넷뱅킹'] = \
+    [
+        {
+            "name": "deposit",
+            "description": "산업은행 특정 계좌에 금액을 입금합니다",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "user_name": {
+                        "type": "string",
+                        "description": "예금주, 계좌 주인",
+                    },
+                    "account": {
+                        "type": "string",
+                        "description": "은행계좌, 계좌번호",
+                    },
+                    "amount": {
+                        "type": "integer",
+                        "description": "입금할 금액, 값은 항상 0보다 큼",
+                    },
+                },
+                "required": ["account","amount"],
+            },
+        },
+        {
+            "name": "withdraw",
+            "description": "산업은행 특정 계좌에서 금액을 출금합니다",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "user_name": {
+                        "type": "string",
+                        "description": "예금주, 계좌 주인",
+                    },
+                    "account": {
+                        "type": "string",
+                        "description": "은행계좌, 계좌번호",
+                    },
+                    "amount": {
+                        "type": "integer",
+                        "description": "출금할 금액, 값은 항상 0보다 큼",
+                    },
+                },
+                "required": ["account","amount"],
+            },
+        },
+        {
+            "name": "external_transfer",
+            "description": "산업은행에서 다른 은행으로 금액을 이체합니다. 타행이체를 합니다.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "user_name": {
+                        "type": "string",
+                        "description": "예금주, 계좌 주인",
+                    },
+                    "account": {
+                        "type": "string",
+                        "description": "은행계좌, 계좌번호",
+                    },
+                    "amount": {
+                        "type": "integer",
+                        "description": "이체할 금액, 값은 항상 0보다 큼",
+                    },
+                    "bank_name": {
+                        "type": "string",
+                        "description": "은행명, 은행이름, 타은행, 산업은행이 아닌 은행",
+                    },
+                    "to_account": {
+                        "type": "string",
+                        "description": "이체 받을 은행계좌, 이체 받을 계좌번호",
+                    },
+                },
+                "required": ["account","amount", "bank_name", "to_account"],
+            },
+        },
+        {
+            "name": "balance",
+            "description": "산업은행 특정 계좌의 잔액을 조회합니다",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "account": {
+                        "type": "string",
+                        "description": "은행계좌, 계좌번호",
+                    },
+                },
+                "required": ["account"],
+            },
+        },
+    ]
