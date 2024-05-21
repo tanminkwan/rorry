@@ -1,7 +1,7 @@
 legacy_fucntions = {}
 
 legacy_fucntions['자산관리'] = \
-[
+    [
         {
             "name": "get_resource_status",
             "description": "특정 시스템의 자원상태를 조회합니다.",
@@ -65,4 +65,30 @@ legacy_fucntions['자산관리'] = \
             },
         },
 
+    ]
+
+legacy_fucntions['코어뱅킹'] = \
+    [
+        {
+            "name": "deposit",
+            "description": "특정 계좌에 금액을 입금합니다",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "bank": {
+                        "type": "string",
+                        "description": "은행명",
+                    },
+                    "account": {
+                        "type": "string",
+                        "description": "은행계좌",
+                    },
+                    "amount": {
+                        "type": "integer",
+                        "description": "입금할 금액, 값은 항상 0보다 큼",
+                    },
+                },
+                "required": ["bank","account","amount"],
+            },
+        },
     ]

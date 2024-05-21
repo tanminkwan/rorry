@@ -1,4 +1,7 @@
 class Legacy:
+    pass
+
+class AssetManager(Legacy):
 
     # 누가 어떤 자원을 얼만큼 가지고 있는지를 관리하는 database : 
     # memory, cpu, disk 3가지의 resource 존재. 
@@ -12,7 +15,7 @@ class Legacy:
             cls.__resource_database[resource_name][system_name] += added_resource
         else:
             cls.__resource_database[resource_name][system_name] = added_resource
-        return cls.__resource_database[resource_name][system_name]
+        return { resource_name:cls.__resource_database[resource_name][system_name] }
 
     # table 전체 조회
     @classmethod
@@ -35,3 +38,11 @@ class Legacy:
     def move_resource(cls, resource_name, sender_name, receiver_name, added_resource):        
         return cls.__add_resource(resource_name, sender_name, -added_resource), \
             cls.__add_resource(resource_name, receiver_name, added_resource)
+    
+class CoreBanking(Legacy):
+    pass
+
+legacy_map = {
+    '자산관리': AssetManager ,
+    '코어뱅킹': CoreBanking ,
+}

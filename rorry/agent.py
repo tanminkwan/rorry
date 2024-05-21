@@ -11,7 +11,7 @@ from legacy_engine import LegacyEngine
 class Agent:
     def __init__(self, system_name) -> None:
 
-        os.environ['OPENAI_API_KEY']="<>"
+        os.environ['OPENAI_API_KEY']=""
         llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
         prompt_str = worldview_prompt.format(system_name=system_name) + system_prompts[system_name]
@@ -62,7 +62,7 @@ class Agent:
             return_messages.append('\n\n Messages from Legacies :')
             for command in commands:
                 rtn, message = self.__call_legacy(command)
-                return_messages.append(message)
+                return_messages.append('```'+message+'```')
                 if rtn < 1:
                     break
 
