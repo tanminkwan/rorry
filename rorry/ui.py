@@ -8,6 +8,7 @@ def init_window(system_name):
     st.session_state['agent'] = Agent(system_name)
     st.session_state['generated'] = []
     st.session_state['past'] = []
+    st.session_state.messages = []
 
 if 'initialized' not in st.session_state:
 
