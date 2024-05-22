@@ -8,6 +8,7 @@ def init_window(system_name):
     st.session_state['agent'] = Agent(system_name)
     st.session_state['generated'] = []
     st.session_state['past'] = []
+    st.session_state.messages = []
 
 if 'initialized' not in st.session_state:
 
@@ -31,7 +32,6 @@ selected_option = st.sidebar.selectbox("시스템을 선택하세요 : ", option
 if st.session_state['system'] != selected_option:
     print(st.session_state['system'], selected_option)
     init_window(selected_option)
-
 
 def generate_response(user_input):    
     #candidate = {"user_input": user_input, "history": "\n".join(st.session_state['past'])}
