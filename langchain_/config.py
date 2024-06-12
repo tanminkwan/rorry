@@ -1,0 +1,6 @@
+OPENAI_API_KEY = ""
+LANGCHAIN_API_KEY = ""
+TAVILY_API_KEY = ""
+SERPAPI_API_KEY = ""
+
+DATABASE_URL = "sqlite:///rorry.db"
