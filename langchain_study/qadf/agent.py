@@ -17,7 +17,7 @@ class Agent:
 
     def __load_env__(self) -> None:
         load_dotenv(dotenv_path='./../.env')
-        os.environ["LANGCHAIN_PROJECT"] = "langchain_study" # Langsmith project 명
+        #os.environ["LANGCHAIN_PROJECT"] = "langchain_study" # Langsmith project 명
 
     def __get_output_parser(self, pydantic_object) -> PydanticOutputParser:
         return PydanticOutputParser(pydantic_object=pydantic_object)
@@ -41,11 +41,9 @@ class Agent:
                     Format :
                     {format}
                 """,
-                input_variables=["question"],
+                input_variables=["question","answer","responses"],
                 partial_variables={
                     "system_prompt" : system_prompt,
-                    "answer" : answer,
-                    "responses" : responses,
                     "format" : output_parger.get_format_instructions(),
                 },
             )
@@ -56,7 +54,7 @@ class Agent:
             | output_parger
         )
 
-        response = self.__chain.invoke(question)
+        response = self.__chain.invoke({"question":question,"answer":answer,"responses":responses})
         return response
     
 if __name__ == "__main__":
