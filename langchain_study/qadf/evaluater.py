@@ -1,7 +1,7 @@
 import sys
 import json
-from reader import Reader
-from writer import Writer
+from reader import ExcelReader
+from writer import ExcelWriter
 from agent import Agent
 from output_schema import EvaluationResponse
 
@@ -15,12 +15,10 @@ if num_args != 3:
 src_file_name = sys.argv[1]
 target_file_name = sys.argv[2]
 
-records = Reader(src_file_name)
-
 agent = Agent()
 
-with Writer(target_file_name) as writer:
-    with Reader(src_file_name) as reader:
+with ExcelWriter(target_file_name) as writer:
+    with ExcelReader(src_file_name) as reader:
         for row_data in reader.get_iterator("구분", "질문", "답","answer","sds_answer","bge_answer"):
 
             responses = dict(

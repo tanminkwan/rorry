@@ -1,7 +1,7 @@
 import openpyxl
 import os
 
-class Writer:
+class ExcelWriter:
     def __init__(self, file_name):
         self._file_name = file_name
         self._excel_data = None

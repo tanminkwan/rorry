@@ -1,7 +1,6 @@
 import sys
-import json
-from reader import Reader
-from writer import Writer
+from reader import PDFReader
+from writer import ExcelWriter
 from agent import Agent
 from output_schema import QuizResponse
 
@@ -15,11 +14,11 @@ if num_args != 3:
 src_file_name = sys.argv[1]
 target_file_name = sys.argv[2]
 
-contents = Reader(src_file_name).get_iterator(chunk_size=3000, chunk_overlap=300)
+contents = PDFReader(src_file_name).get_iterator(chunk_size=3000, chunk_overlap=300)
 
 agent = Agent()
 
-with Writer(target_file_name) as writer:
+with ExcelWriter(target_file_name) as writer:
     for i, content in enumerate(contents):
         
         arguments = dict(
