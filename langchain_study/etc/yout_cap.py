@@ -20,11 +20,13 @@ def youtube2mp4(youtube_url, output_file, max_frames=2000, fps=30):
         return wrapper
     return decorator
 
+from pprint import pprint 
 def youtube_to_numpy(youtube_url, max_frames=500):
-    ydl_opts = {'format': 'best[ext=mp4]'}
+    ydl_opts = {'format': 'best[ext=mp4]','nocheckcertificate': True}
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info = ydl.extract_info(youtube_url, download=False)
         video_url = info['url']
+        pprint(info)
 
     cap = cv2.VideoCapture(video_url)
     
