@@ -126,7 +126,8 @@ class YouTube:
                 'description': item['snippet']['description'],
                 'thumbnail': item['snippet']['thumbnails']['default']['url'],
                 'publishedAt': item['snippet']['publishedAt'],
-                'has_specified_caption': has_specified_caption
+                'channel': item['snippet']['channelTitle'],
+                'has_specified_caption': has_specified_caption,
             }
             results.append(video_data)
             
@@ -146,6 +147,7 @@ class Content:
     thumbnail: str
     published_at: datetime
     has_specified_caption: bool
+    channel: str
     captions: List[Dict] = field(default_factory=list)
 
     @classmethod
@@ -156,6 +158,7 @@ class Content:
             description=data['description'],
             thumbnail=data['thumbnail'],
             published_at=datetime.fromisoformat(data['publishedAt'].rstrip('Z')),
+            channel=data['channel'],
             has_specified_caption=data['has_specified_caption']
         )
 
@@ -167,6 +170,7 @@ class Content:
             'thumbnail': self.thumbnail,
             'publishedAt': self.published_at.isoformat() + 'Z',
             'has_specified_caption': self.has_specified_caption,
+            'channel': self.channel,
             'captions': self.captions
         }
 
