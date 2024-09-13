@@ -174,8 +174,8 @@ def download_youtube(youtube_url, job_id=''):
     ydl_opts = {
         #'format': 'best[ext=mp4]',
         #'outtmpl': 'temp_video.%(ext)s',
-        #'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
-        'format': 'best[ext=mp4]/best',
+        'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+        #'format': 'best[ext=mp4]/best',
         'outtmpl': job_id+'_'+'%(id)s.%(ext)s',
         'nocheckcertificate': True,
     }
