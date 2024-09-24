@@ -15,10 +15,12 @@ def restore_face(input_image, use_gpu=False):
     :return: ndarray 타입의 복원된 이미지
     """
     # 모델 경로 설정
-    model_path = "C:\\pypjt\\env\\codeformer.pth"
+    #model_path = "C:\\pypjt\\env\\codeformer.pth"
+    model_path = "codeformer.pth"
 
     # 모델 로드
-    device = torch.device('cuda' if use_gpu and torch.cuda.is_available() else 'cpu')
+    #device = torch.device('cuda' if use_gpu and torch.cuda.is_available() else 'cpu')
+    device = torch.device('cpu')
     model = ARCH_REGISTRY.get('CodeFormer')(dim_embd=512, codebook_size=1024, n_head=8, n_layers=9, connect_list=['32', '64', '128', '256']).to(device)
     
     checkpoint = torch.load(model_path, weights_only=True, map_location=device)['params_ema']
@@ -74,7 +76,7 @@ def restore_face(input_image, use_gpu=False):
 # 사용 예시
 if __name__ == '__main__':
     # 입력 이미지 로드
-    img_path = "C:\\pypjt\\face\\test_hanni2.jpg"
+    img_path = r"C:\stable_diff\Face\ana2.jpg"
     input_img = cv2.imread(img_path)
     
     # 얼굴 복원 함수 호출
