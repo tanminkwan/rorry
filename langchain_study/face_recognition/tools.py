@@ -6,12 +6,14 @@ import insightface
 from insightface.app import FaceAnalysis
 from insightface.data import get_image as ins_get_image
 from insightface.app.common import Face
-from typing import Tuple, Optional
+from typing import Tuple, Optional, Literal
 from torchvision.transforms.functional import normalize
 from basicsr.utils import img2tensor, tensor2img
 from facelib.utils.face_restoration_helper import FaceRestoreHelper
 from basicsr.utils.registry import ARCH_REGISTRY
 from sklearn.metrics.pairwise import cosine_similarity
+from basicsr.archs.rrdbnet_arch import RRDBNet
+from basicsr.utils.realesrgan_utils import RealESRGANer
 
 assert insightface.__version__ >= '0.7'
 
@@ -507,5 +509,42 @@ class VideoFaceProcessor:
         total_seconds = minutes * 60 + seconds
         return total_seconds
 
+#Upscaling 모델 경로 설정
+UPSCALE_MODEL_X2 = r"C:\pypjt\restore\Lib\site-packages\Real-ESRGAN\weights\RealESRGAN_x2plus.pth"
+UPSCALE_MODEL_X4 = r"C:\pypjt\restore\Lib\site-packages\Real-ESRGAN\weights\RealESRGAN_x4plus.pth"
+
+def upscale_image(input_image: np.ndarray, scale: Literal[2, 4] = 2) -> np.ndarray:
+    """
+    이미지를 업스케일링하는 함수.
+    
+    :param input_image: ndarray 타입의 입력 이미지
+    :param model_path: 모델 파일 경로
+    :param scale: 업스케일 배율 (기본값: 2)
+    :return: 업스케일링된 ndarray 타입의 이미지
+    """
+    # 장치 설정
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        
+    # Upscaing Model 선택
+    model_path = UPSCALE_MODEL_X2 if scale == 2 else UPSCALE_MODEL_X4
+
+    # 모델 생성
+    model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=scale)
+    
+    # 업스케일러 생성 (half=False로 설정하여 FP32 사용)
+    upscaler = RealESRGANer(scale=scale, model_path=model_path, model=model, tile=400, tile_pad=10, pre_pad=0, half=False)
+    
+    # 입력 이미지가 BGR 형식일 경우, RGB로 변환
+    if input_image.shape[-1] == 3:  # 이미지가 컬러일 경우
+        input_image = cv2.cvtColor(input_image, cv2.COLOR_BGR2RGB)
+    
+    # 업스케일링 수행
+    output, _ = upscaler.enhance(input_image, outscale=scale)
+    
+    # 결과를 BGR로 다시 변환하여 반환
+    output = cv2.cvtColor(output, cv2.COLOR_RGB2BGR)
+    
+    return output
+    
 def get_yaw_pitch_roll(face: Face) -> Tuple[Optional[float], Optional[float], Optional[float]]:
     return face.pose[1], face.pose[0], face.pose[2] #yaw, pitch, roll
