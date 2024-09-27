@@ -210,7 +210,7 @@ def restore_face(input_image: np.ndarray, use_gpu: bool=False, draw_rectangle: b
             cv2.rectangle(restored_img, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
     # 최종 이미지 크기 조정 (원본 크기로)
-    restored_img = cv2.resize(restored_img, (w, h))
+    restored_img = cv2.resize(restored_img, (w, h), interpolation=cv2.INTER_LINEAR)
 
     return restored_img
 
@@ -545,6 +545,6 @@ def upscale_image(input_image: np.ndarray, scale: Literal[2, 4] = 2) -> np.ndarr
     output = cv2.cvtColor(output, cv2.COLOR_RGB2BGR)
     
     return output
-    
+
 def get_yaw_pitch_roll(face: Face) -> Tuple[Optional[float], Optional[float], Optional[float]]:
     return face.pose[1], face.pose[0], face.pose[2] #yaw, pitch, roll
