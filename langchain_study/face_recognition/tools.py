@@ -18,10 +18,10 @@ from basicsr.utils.realesrgan_utils import RealESRGANer
 assert insightface.__version__ >= '0.7'
 
 #SWAPPER_MODLE = 'C:\\Users\\tanmi\\stable-diffusion-webui\\models\\insightface\\inswapper_128.onnx'
-SWAPPER_MODLE = 'C:\\pypjt\\env\\inswapper_128.onnx'
+SWAPPER_MODLE = os.environ["SWAPPER_MODLE"]
 
 #CodeFormer 모델 경로 설정
-CODEFORMER_MODEL = "C:\\pypjt\\env\\codeformer.pth"
+CODEFORMER_MODEL = os.environ["CODEFORMER_MODEL"]
 
 class FaceSwapper:
     def __init__(self, model_name='buffalo_l', ctx_id=-1, det_size=(640, 640), nms_thresh = 0.6):
@@ -144,13 +144,14 @@ class FaceSwapper:
         res = np.concatenate(res, axis=1)
         return res
 
-def restore_face(input_image: np.ndarray, use_gpu: bool=False, draw_rectangle: bool=True)->np.ndarray:
+def restore_face(input_image: np.ndarray, fidelity: float=0.5, use_gpu: bool=False, draw_rectangle: bool=True)->np.ndarray:
     """
     얼굴 복원 함수
     
     :param input_image: ndarray 타입의 입력 이미지
-    :param model_path: CodeFormer 모델 파일 경로
     :param use_gpu: GPU 사용 여부 (기본값: False)
+    :param draw_rectangle: 복원된 얼굴에 사각형 그리기 여부 (기본값: True)
+    :param fidelity: 얼굴 복원의 충실도, 0에서 1 사이의 값으로, 1에 가까울수록 더 높은 품질 (기본값: 0.5)
     :return: ndarray 타입의 복원된 이미지
     """
     # 모델 로드
@@ -187,7 +188,7 @@ def restore_face(input_image: np.ndarray, use_gpu: bool=False, draw_rectangle: b
 
         try:
             with torch.no_grad():
-                output = model(cropped_face_t, w=0.5, adain=True)[0]
+                output = model(cropped_face_t, w=fidelity, adain=True)[0]
                 restored_face = tensor2img(output, rgb2bgr=True, min_max=(-1, 1))
             del output
             if use_gpu:
