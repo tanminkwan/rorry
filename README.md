@@ -7,23 +7,25 @@ VSCode에서 `.ipynb` 파일에 특정 **virtual environment(가상 환경)**를
 먼저, 특정 가상 환경에서 **Jupyter**와 **IPython kernel**을 설치하고, 해당 가상 환경을 Jupyter 커널로 등록해야 합니다.
 
 #### 가상 환경에서 Jupyter 설치:
+0. 가상 환경 설치
+   - `python -m venv myenv`
 
-1. 가상 환경을 활성화합니다:
+2. 가상 환경을 활성화합니다:
    - Linux/Mac:
      ```bash
-     source path/to/venv/bin/activate
+     source myenv/bin/activate
      ```
    - Windows:
      ```bash
-     path\to\venv\Scripts\activate
+     myenv\Scripts\activate
      ```
 
-2. 가상 환경에서 Jupyter와 IPython kernel 설치:
+3. 가상 환경에서 Jupyter와 IPython kernel 설치:
    ```bash
    pip install jupyter ipykernel
    ```
 
-3. 가상 환경을 Jupyter 커널로 등록:
+4. 가상 환경을 Jupyter 커널로 등록:
    ```bash
    python -m ipykernel install --user --name myenv --display-name "Python (myenv)"
    ```
